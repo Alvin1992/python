@@ -52,6 +52,7 @@ def backup(otherList):
                 for f in files:
                     fullpath = os.path.join(root, f)
                     tar.add(fullpath)
+    print 'backup successfully'
     tar.close()
 
 info = {
