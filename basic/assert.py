@@ -2,7 +2,7 @@
 # -*- coding: UTF-8 -*-
 # Filename: assert.py
 
-list = ['apple']
-assert len(list) >= 1
+mylist = ['apple']
+assert len(mylist) >= 1
 list.pop()
-assert len(list) >= 1
+assert len(mylist) >= 1
