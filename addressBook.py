@@ -7,17 +7,15 @@ import cPickle
 import sys
 import os
 
-# 版本信息
-info = {}
 # 联系人保存的表
-addressBook = {'name': '13100000001', 'kate': '13000000001'}
+addressBook = {}
 # 保存的文件路径
 dataPath = '/d/fanrx/addressBook.data'
 
 
-def updateTime():
+def updateTime(book):
     """Update modify time"""
-    info['lastModify'] = time.strftime('%Y-%m-%d %H:%M:%S')
+    book['lastModify'] = time.strftime('%Y-%m-%d %H:%M:%S')
 
 
 def addContact(book, name, addr):
@@ -58,15 +56,15 @@ if __name__ == '__main__':
 
     # 没有额外的参数传递时打印所有的联系人
     if length < 2:
-        for item in addressBook:
-            print item, addressBook[item]
+        if len(addressBook) == 0:
+            print 'No contact'
+        else:
+            for item in addressBook:
+                if item != 'lastModify':
+                    print item, addressBook[item]
         sys.exit()
 
     firstArg = args[1]
-    # 没有短命令或者长命令的情况
-    if length == 2:
-        findContact(addressBook, firstArg)
-
     # 第一个参数如果以-开始，表示进行的是增删改查
     if firstArg.startswith('-'):
         option = firstArg[1:]
@@ -74,10 +72,23 @@ if __name__ == '__main__':
             findContact(addressBook, args[2])
         elif option == 'a' or option == 'c':
             addContact(addressBook, args[2], args[3])
+            updateTime(addressBook)
         elif option == 'd':
             delContact(addressBook, args[2])
-    else:
-        if length == 3:
+            updateTime(addressBook)
+        elif option == 'm':
+            try:
+                print 'Last change of addressBook is %s' % addressBook['lastModify']
+            except KeyError:
+                print 'This is your first operation'
+            sys.exit()
+        elif option == 'n':
+            print 'Total number of addressBook is %d' % (len(addressBook)-1)
+            sys.exit()
+            # 没有短命令或者长命令的情况
+    elif length == 2:
+            findContact(addressBook, firstArg)
+    elif length == 3:
             addContact(addressBook, args[1], args[2])
 
     f = file(dataPath, 'w')
