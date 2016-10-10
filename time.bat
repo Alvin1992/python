@@ -1,0 +1,1 @@
+python E:\fanrx\python\drill\three_digit.py
