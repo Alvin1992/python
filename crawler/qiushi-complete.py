@@ -76,7 +76,7 @@ class QSBK:
             if cmd == 'Q':
                 self.enabled = False
                 return
-            print u'\n-----------第几页：%s 作者：%s 好评：%s 评论数：%s-------------' % (page, joke['author'], joke['upvote'], joke['commentNum'])
+            print u'\n-----------第%s页 作者：%s 好评：%s 评论数：%s-------------' % (page, joke['author'], joke['upvote'], joke['commentNum'])
             try:
                 print ('\n' + joke['content'].replace('<br />', '\n') + '\n')
             except UnicodeEncodeError, e:
